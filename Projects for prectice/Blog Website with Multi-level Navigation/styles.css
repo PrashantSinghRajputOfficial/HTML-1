@@ -1,0 +1,93 @@
+/* Global Styles */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+h1, h2 {
+    color: #333;
+}
+
+/* Navigation Bar */
+.nav-bar {
+    list-style-type: none;
+    background-color: #333;
+    padding: 0;
+    margin: 0;
+}
+
+.nav-bar > li {
+    display: inline-block;
+    position: relative;
+}
+
+.nav-bar > li > a {
+    color: white;
+    text-decoration: none;
+    padding: 15px 20px;
+    display: block;
+}
+
+.nav-bar > li > a:hover {
+    background-color: #555;
+}
+
+/* Dropdown Menu */
+.nav-bar li ul.dropdown {
+    display: none;
+    position: absolute;
+    background-color: #333;
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+    top: 100%;
+    left: 0;
+}
+
+.nav-bar li:hover ul.dropdown {
+    display: block;
+}
+
+.dropdown li {
+    width: 180px;
+}
+
+.dropdown li a {
+    padding: 10px 15px;
+}
+
+.dropdown li a:hover {
+    background-color: #555;
+}
+
+/* Home Page Section */
+#latest-post {
+    padding: 20px;
+}
+
+#latest-post h1 {
+    font-size: 24px;
+}
+
+#latest-post article {
+    margin-top: 10px;
+}
+
+/* Blog List Section */
+#blog-list {
+    padding: 20px;
+}
+
+#blog-list ol {
+    margin: 20px 0;
+}
+
+#blog-list ol li {
+    font-size: 18px;
+}
+
+/* About and Contact Sections */
+#about, #contact {
+    padding: 20px;
+}

@@ -1,0 +1,36 @@
+/* styles.css */
+
+/* Basic reset for margins and paddings */
+body, ul {
+    margin: 0;
+    padding: 0;
+}
+
+/* Style for the navigation menu */
+.nav-menu {
+    list-style-type: none; /* Remove default bullet points */
+    background-color: #333; /* Dark background for the menu */
+    overflow: hidden; /* Clear floats */
+    margin: 0;
+    padding: 0;
+}
+
+/* Style for each menu item */
+.nav-menu li {
+    float: left; /* Align menu items horizontally */
+   font-size: 30px;
+}
+
+/* Style for links */
+.nav-menu a {
+    display: block; /* Make links fill the list item */
+    color: rgb(246, 3, 3); /* White text color */
+    text-align: center; /* Center text */
+    padding: 20px 140px; /* Add padding for spacing */
+    text-decoration: none; /* Remove underline from links */
+}
+
+/* Change color on hover */
+.nav-menu a:hover {
+    background-color: #111; /* Darker background on hover */
+}

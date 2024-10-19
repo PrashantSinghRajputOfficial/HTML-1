@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Blog | Blog List</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+    <!-- Multi-level Navigation Bar -->
+    <nav>
+        <ul class="nav-bar">
+            <li><a href="index.html">Home</a></li>
+            <li>
+                <a href="#">Blog</a>
+                <ul class="dropdown">
+                    <li><a href="blog-list.html">All Posts</a></li>
+                    <li><a href="#">Categories</a>
+                        <ul class="dropdown">
+                            <li><a href="#">Web Development</a></li>
+                            <li><a href="#">JavaScript</a></li>
+                            <li><a href="#">CSS Tips</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </li>
+            <li>
+                <a href="#">About</a>
+                <ul class="dropdown">
+                    <li><a href="about.html">About Me</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                </ul>
+            </li>
+        </ul>
+    </nav>
+
+    <!-- Blog List Section -->
+    <section id="blog-list">
+        <h1>All Blog Posts</h1>
+        <ol>
+            <li><a href="blog1.html">The Future of Web Development</a></li>
+            <li><a href="blog2.html">How to Build Responsive Websites</a></li>
+            <li><a href="blog3.html">Understanding JavaScript Closures</a></li>
+        </ol>
+    </section>
+
+</body>
+</html>
