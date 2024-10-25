@@ -1,7 +1,4 @@
-/* styles.css */
-
-/* Basic reset for margins and paddings */
-body, ul {
+body, ul, div {
     margin: 0;
     padding: 0;
 }
@@ -65,4 +62,9 @@ body, ul {
 /* Change color on hover */
 .nav-menu a:hover {
     background-color: #111; /* Darker background on hover */
+}
+.top{
+    float:left;
+    background-color: blue;
+    padding: 0px 123px;
 }

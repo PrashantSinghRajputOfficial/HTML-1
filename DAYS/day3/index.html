@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Personal Portfolio Gallery</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+        }
+        .gallery {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        .gallery img {
+            margin: 10px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            width: 300px;
+            height: auto;
+        }
+    </style>
+</head>
+<body>
+    <h1>My Portfolio Gallery</h1>
+    <p>Welcome to my portfolio! Here are some of my favorite images:</p>
+    <div class="gallery">
+        <!-- Relative Path Image -->
+        <img src="./diwali3.jpg" alt="Local Image 1" width="300" height="200">
+        
+        <!-- Another Relative Path Image -->
+        <img src="./diwali3.jpg" alt="Local Image 2" width="300" height="200">
+        
+        <!-- Absolute URL Image -->
+        <img src="./diwali-feature-1.jpg" alt="External Image" width="300" height="200">
+
+    <picture>
+        <source srcset="./diwali3.jpg" media="(max-width: 100px)">
+        <source srcset="./diwali3.jpg" media="(max-width: 110px)">
+        <img src="./diwali-feature-1.jpg" alt="High-quality image of a sunset" width="800" height="600">
+    </picture> 
+</div>
+</body>
+</html>

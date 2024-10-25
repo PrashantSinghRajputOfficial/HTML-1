@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Diwali registration form</title>
+    <style>
+        .form-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-top: 50px;
+        }j
+
+        .form{
+            display: grid;
+            grid-template-columns: 2fr,2fr;
+            gap: 30px;
+            margin-bottom: 15px;
+        }
+        input[type="text"], input[type="email"] {
+
+            text-emphasis-color: black;
+            padding: 10px;
+            width: 500px;
+            border: 1px solid black;
+            border-radius: 5px;
+
+        }
+        label {
+            font-weight: bold;
+        }
+        .form-group {
+            margin-bottom: 20px;}
+
+
+
+    </style>
+    
+</head>
+<body style="background-color: antiquewhite;">
+    <div class="form-container">
+      <h1>Diwali Registration</h1>
+
+    
+      <div class="form">
+         <form action="/submit application" method="post">
+            <div>
+        <label  for="username">Name:</label> <br>
+        <input type="text" id="First-Name" name="First-Name" placeholder="First"  required> 
+        <input type="text" id="Second-Name" name="Second-Name" placeholder="Second" required>  </div>
+
+        <br><br>
+
+        <div style="display: flex;">
+            <div style="flex: 1;">
+                <label for="email">Email *</label><br>
+                <input type="email" id="email" name="email"  required>
+            </div>
+s
+            <div style="margin-left: 5px;margin-left: 5px;">
+                <label for="guests">Number of Guests (including yourself) *</label><br>
+                <input type="text" id="guests" name="guests"  required>
+            </div> <br><br>
+ </div>
+ <br><br>
+    <div class="radio" style="background-color: rgb(254, 215, 222);">
+        <label>How did you hear about this event? *</label><br>
+       <label><input type="radio" id="instagram" name="source " value="instagram" required>Instagram</label><br><br>
+       <label><input type="radio" id="whatsapp" name="source " value="whatsapp" required>  Whatsapp</label><br><br>
+       <label><input type="radio" id="telegram" name="source " value="telegram" required>Telegram</label><br><br>
+       <label><input type="radio" id="Newsapaper" name="source " value="Newsapaper" required>Newsapaper</label><br><br>
+       <label><input type="radio" id="Website" name="source " value="Website" required>Website</label><br><br>
+       <label><input type="radio" id="other" name="source " value="source" placeholder="other" required>Other</label><br><br>
+
+
+       <em style="background-color: red;">How did you hear about this event? is required.</em><br>
+       <br>
+    </div>
+
+    <div>
+        <label> <input type="radio" id=""></label>
+    </div>
+
+        
+
+    </form>
+     </div>
+</body>
+</html>
