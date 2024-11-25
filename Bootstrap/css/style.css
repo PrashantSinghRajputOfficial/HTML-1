@@ -8,3 +8,31 @@
     background-color: aquamarine;
     
  }
+
+h5, h1, h2, h3, h4, h6 {
+    font-family: sans-serif ;
+    text-transform: capitalize !important;
+
+ }
+
+ p, a, .btn  {
+    font-family: monospace ;
+   }
+   body
+   {
+      padding: 0%;
+      margin: 0%;
+   }
+
+   .row{
+      margin: auto;
+      justify-content: center;
+      align-items: center;
+      gap: 20px;
+    margin-bottom: 20px;
+    margin-top: 20px;
+   }
+
+
+
+    
