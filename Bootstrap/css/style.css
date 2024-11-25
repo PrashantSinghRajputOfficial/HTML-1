@@ -1,0 +1,10 @@
+.maint div 
+{ float:left;
+    width: 100%;
+
+ margin: 5px;
+} 
+.card {
+    background-color: aquamarine;
+    
+ }
