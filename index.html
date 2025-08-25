@@ -1,16 +1,826 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
-    <h1 >My HTML Journey </h1>
-    <p id="text" style="font-size: 24px;" >Day by day learning </p>
-    <a href="./DAYS/day1.html">day one program</a>
-    
-    <iframe width="320" height="180" src="https://www.youtube.com/embed/p2j6Wq57MEE" title="If I Wanted a Software Engineering Placement in 2025, I’d Do This" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe></DIV>
 
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>My Crazy Dynamic Pro Site</title>
+    <meta name="description"
+        content="A single-file, crazy dynamic personal website with particles, neon gradients, typewriter text, and glassmorphism – pure HTML/CSS/JS." />
+    <style>
+        :root {
+            --bg: #0b0d10;
+            --bg-2: #0f1320;
+            --text: #eaf2ff;
+            --muted: #9cb3d3;
+            --accent: #7c3aed;
+            /* violet */
+            --accent-2: #22d3ee;
+            /* cyan */
+            --card: rgba(255, 255, 255, 0.08);
+            --border: rgba(255, 255, 255, 0.12);
+            --shadow: 0 10px 30px rgba(0, 0, 0, 0.45);
+            --glass: saturate(160%) blur(14px);
+            --radius: 20px;
+        }
+
+        [data-theme="light"] {
+            --bg: #f9fbff;
+            --bg-2: #eaf2ff;
+            --text: #0b1220;
+            --muted: #3d4b63;
+            --accent: #2563eb;
+            /* blue */
+            --accent-2: #10b981;
+            /* emerald */
+            --card: rgba(255, 255, 255, 0.7);
+            --border: rgba(0, 0, 0, 0.08);
+            --shadow: 0 10px 30px rgba(0, 0, 0, 0.12);
+            --glass: saturate(130%) blur(8px);
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        html,
+        body {
+            height: 100%;
+        }
+
+        body {
+            margin: 0;
+            font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Inter, Arial, "Noto Sans", "Apple Color Emoji", "Segoe UI Emoji";
+            color: var(--text);
+            background: radial-gradient(1200px 800px at 80% -10%, rgba(124, 58, 237, 0.25), transparent 60%),
+                radial-gradient(1200px 800px at 0% 120%, rgba(34, 211, 238, 0.18), transparent 60%),
+                linear-gradient(180deg, var(--bg), var(--bg-2));
+            overflow-x: hidden;
+        }
+
+        /* Animated neon gradient overlay */
+        .neon-gradient {
+            position: fixed;
+            inset: -20vmax;
+            z-index: -2;
+            pointer-events: none;
+            background: conic-gradient(from 180deg at 50% 50%, rgba(124, 58, 237, 0.18), rgba(34, 211, 238, 0.18), rgba(255, 99, 132, 0.18), rgba(124, 58, 237, 0.18));
+            filter: blur(60px) saturate(140%);
+            animation: spin 40s linear infinite;
+            will-change: transform;
+        }
+
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        /* Particle canvas sits behind content */
+        #bgCanvas {
+            position: fixed;
+            inset: 0;
+            z-index: -1;
+            background: transparent;
+        }
+
+        header {
+            position: sticky;
+            top: 0;
+            z-index: 20;
+            backdrop-filter: var(--glass);
+            background: linear-gradient(to bottom, rgba(0, 0, 0, 0.35), rgba(0, 0, 0, 0.0));
+            border-bottom: 1px solid var(--border);
+        }
+
+        .nav {
+            max-width: 1100px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 14px 20px;
+        }
+
+        .brand {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+            font-weight: 800;
+            letter-spacing: 0.5px;
+        }
+
+        .brand .logo {
+            width: 36px;
+            height: 36px;
+            border-radius: 12px;
+            background: linear-gradient(135deg, var(--accent), var(--accent-2));
+            box-shadow: var(--shadow);
+            position: relative;
+        }
+
+        .brand .logo:after {
+            content: "";
+            position: absolute;
+            inset: 3px;
+            border-radius: 10px;
+            background: radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.5), transparent 40%);
+            mix-blend-mode: overlay;
+        }
+
+        .links {
+            display: flex;
+            gap: 14px;
+        }
+
+        .links a {
+            text-decoration: none;
+            color: var(--text);
+            opacity: 0.8;
+            padding: 8px 12px;
+            border-radius: 999px;
+            border: 1px solid transparent;
+            transition: 180ms ease;
+        }
+
+        .links a:hover {
+            opacity: 1;
+            border-color: var(--border);
+            background: rgba(255, 255, 255, 0.06);
+        }
+
+        .toggle {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 12px;
+            border-radius: 999px;
+            cursor: pointer;
+            border: 1px solid var(--border);
+            background: var(--card);
+            backdrop-filter: var(--glass);
+            box-shadow: var(--shadow);
+            user-select: none;
+            font-weight: 600;
+            font-size: 14px;
+        }
+
+        main {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 60px 20px 100px;
+        }
+
+        .hero {
+            display: grid;
+            grid-template-columns: 1.1fr 0.9fr;
+            gap: 26px;
+            align-items: center;
+            min-height: 70vh;
+        }
+
+        @media (max-width: 900px) {
+            .hero {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .card {
+            background: var(--card);
+            backdrop-filter: var(--glass);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+        }
+
+        .hero .intro {
+            padding: 28px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero .intro:after {
+            content: "";
+            position: absolute;
+            inset: -1px;
+            border-radius: inherit;
+            padding: 1px;
+            background: linear-gradient(135deg, rgba(124, 58, 237, 0.45), rgba(34, 211, 238, 0.45));
+            -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+            -webkit-mask-composite: xor;
+            mask-composite: exclude;
+        }
+
+        .title {
+            font-size: clamp(32px, 5vw, 64px);
+            line-height: 1.05;
+            margin: 0;
+            font-weight: 900;
+            letter-spacing: -0.5px;
+        }
+
+        .type {
+            display: inline-block;
+            border-right: 2px solid var(--accent-2);
+            white-space: nowrap;
+            overflow: hidden;
+            vertical-align: bottom;
+            padding-right: 6px;
+        }
+
+        .subtitle {
+            margin: 10px 0 18px;
+            color: var(--muted);
+            font-size: clamp(16px, 2vw, 20px);
+        }
+
+        .cta-row {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+            margin-top: 12px;
+        }
+
+        .btn {
+            border: 1px solid var(--border);
+            background: linear-gradient(180deg, rgba(255, 255, 255, 0.09), rgba(255, 255, 255, 0.02));
+            padding: 12px 16px;
+            border-radius: 14px;
+            color: var(--text);
+            text-decoration: none;
+            font-weight: 700;
+            letter-spacing: .3px;
+            transition: transform 120ms ease, box-shadow 120ms ease;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(124, 58, 237, 0.25);
+        }
+
+        .btn.primary {
+            background: linear-gradient(135deg, var(--accent), var(--accent-2));
+            color: white;
+            border: none;
+        }
+
+        .pfp {
+            padding: 0;
+            position: relative;
+            display: grid;
+            place-items: center;
+            aspect-ratio: 1/1;
+            overflow: hidden;
+        }
+
+        .pfp .frame {
+            width: 100%;
+            aspect-ratio: 1/1;
+            border-radius: 30px;
+            position: relative;
+            overflow: hidden;
+            border: 1px solid var(--border);
+            background: radial-gradient(120% 120% at 80% 20%, rgba(34, 211, 238, 0.3), transparent 40%),
+                radial-gradient(120% 120% at 30% 80%, rgba(124, 58, 237, 0.3), transparent 40%),
+                linear-gradient(180deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.04));
+        }
+
+        .pfp img {
+            position: absolute;
+            width: 78%;
+            object-fit: cover;
+            border-radius: 24px;
+            filter: drop-shadow(0 20px 30px rgba(0, 0, 0, 0.4));
+            transform: translateY(6%);
+        }
+
+        /* Sections */
+        section {
+            margin-top: 70px;
+        }
+
+        h2 {
+            font-size: clamp(24px, 3vw, 36px);
+            margin: 0 0 14px;
+        }
+
+        p {
+            line-height: 1.6;
+        }
+
+        .grid {
+            display: grid;
+            gap: 18px;
+            grid-template-columns: repeat(3, 1fr);
+        }
+
+        @media (max-width: 900px) {
+            .grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .tile {
+            padding: 18px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .tile h3 {
+            margin: 0 0 6px;
+        }
+
+        .tile .small {
+            color: var(--muted);
+            font-size: 14px;
+        }
+
+        .gallery {
+            display: grid;
+            grid-template-columns: repeat(6, 1fr);
+            gap: 10px;
+        }
+
+        @media (max-width: 900px) {
+            .gallery {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+
+        .shot {
+            position: relative;
+            border-radius: 14px;
+            overflow: hidden;
+            border: 1px solid var(--border);
+            aspect-ratio: 1/1;
+        }
+
+        .shot img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+            transition: transform .5s ease;
+        }
+
+        .shot:hover img {
+            transform: scale(1.06);
+        }
+
+        footer {
+            margin-top: 90px;
+            padding: 24px 20px;
+            text-align: center;
+            color: var(--muted);
+            border-top: 1px dashed var(--border);
+        }
+
+        .chip {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 12px;
+            border: 1px solid var(--border);
+            border-radius: 999px;
+            background: var(--card);
+        }
+
+        /* Smooth scroll */
+        html {
+            scroll-behavior: smooth;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="neon-gradient" aria-hidden="true"></div>
+    <canvas id="bgCanvas"></canvas>
+
+    <header>
+        <nav class="nav">
+            <div class="brand">
+                <div class="logo" aria-hidden="true"></div>
+                <span>My Pro Space</span>
+            </div>
+            <div class="links">
+                <a href="#home">Home</a>
+                <a href="#about">About</a>
+                <a href="#work">Work</a>
+                <a href="#gallery">Gallery</a>
+                <a href="#contact">Contact</a>
+                <button id="themeToggle" class="toggle" title="Toggle theme" aria-label="Toggle theme">🌗 Theme</button>
+            </div>
+        </nav>
+    </header>
+
+    <main id="home">
+        <section class="hero">
+            <div class="intro card">
+                <h1 class="title">Namaste, I'm <span
+                        style="background: linear-gradient(135deg, var(--accent), var(--accent-2)); -webkit-background-clip:text; background-clip:text; color: transparent;">Prashant
+                        Singh</span> 👋</h1>
+                <div style="height: 44px; margin-top: 6px;">
+                    <div class="type" id="typewriter"></div>
+                </div>
+                <p class="subtitle">A <b>crazy dynamic</b> personal website – neon gradients, particles, glassmorphism,
+                    and buttery-smooth animations. Built in a <b>single HTML file</b>.</p>
+                <div class="cta-row">
+                    <a class="btn primary" href="#contact">Hire / Contact</a>
+                    <a class="btn" href="#work">See My Work</a>
+                    <span class="chip" id="localTime">🕒</span>
+                </div>
+            </div>
+            <div class="pfp card">
+                <div class="frame">
+                    <!-- Embedded SVG portrait-style illustration -->
+                    <img alt="Smile Emoji Avatar" src="data:image/svg+xml;utf8,
+<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 400'>
+  <defs>
+    <linearGradient id='g1' x1='0' x2='1' y1='0' y2='1'>
+      <stop offset='0' stop-color='%2322d3ee'/>
+      <stop offset='1' stop-color='%237c3aed'/>
+    </linearGradient>
+    <clipPath id='r'><rect x='0' y='0' width='400' height='400' rx='40' ry='40'/></clipPath>
+  </defs>
+  <g clip-path='url(%23r)'>
+    <rect width='400' height='400' fill='url(%23g1)'/>
+    <circle cx='300' cy='80' r='120' fill='rgba(255,255,255,0.25)'/>
+    <circle cx='100' cy='340' r='130' fill='rgba(0,0,0,0.2)'/>
+    <g transform='translate(90,80)'>
+      <!-- Smiley face -->
+      <circle cx='110' cy='110' r='90' fill='yellow' stroke='black' stroke-width='4'/>
+      <!-- Eyes -->
+      <circle cx='85' cy='90' r='12' fill='black'/>
+      <circle cx='135' cy='90' r='12' fill='black'/>
+      <!-- Smile -->
+      <path d='M70 120 Q110 170 150 120' stroke='black' stroke-width='6' fill='none' stroke-linecap='round'/>
+    </g>
+  </g>
+</svg>" />
+
+                </div>
+            </div>
+        </section>
+
+        <section id="about">
+            <h2>About</h2>
+            <div class="grid">
+                <div class="tile card">
+                    <h3>Who am I?</h3>
+                    <p>I'm a creator who loves bold visuals, playful motion, and clean code. This website is crafted as
+                        a <b>single-file</b> showcase with no external libraries.</p>
+                    <p class="small">Tech: HTML • CSS • JavaScript • Canvas</p>
+                </div>
+                <div class="tile card">
+                    <h3>What can I do?</h3>
+                    <p>Design sleek UIs, build fast frontends, and experiment with WebGL/canvas effects. I mix
+                        <i>aesthetic</i> with <i>performance</i>.</p>
+                    <p class="small">Animations: custom easing, parallax, typewriter, particles.</p>
+                </div>
+                <div class="tile card">
+                    <h3>Fun Bits</h3>
+                    <p>Tap the canvas – particles burst. Move your mouse – they swirl. Toggle theme for a whole new
+                        vibe. Click buttons to hear subtle beeps 👂</p>
+                    <p class="small">Try it now!</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="work">
+            <h2>Featured Work</h2>
+            <div class="grid">
+                <div class="tile card">
+                    <h3>Neon Landing</h3>
+                    <p>A bold hero with glowing gradients and kinetic typography to grab attention while staying
+                        readable.</p>
+                </div>
+                <div class="tile card">
+                    <h3>Glass Dashboard</h3>
+                    <p>Frosted panels, soft shadows, and responsive cards for clean data presentation.</p>
+                </div>
+                <div class="tile card">
+                    <h3>Particle Playground</h3>
+                    <p>Interactive particles reacting to pointer + sound feedback via WebAudio.</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="gallery">
+            <h2>Gallery</h2>
+            <div class="gallery">
+                <!-- 6 lightweight embedded images (SVG patterns) -->
+                <div class="shot"><img alt="abstract 1" src="data:image/svg+xml;utf8,
+          <svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 200'>
+            <defs><linearGradient id='a' x1='0' x2='1'><stop offset='0' stop-color='%232563eb'/><stop offset='1' stop-color='%2310b981'/></linearGradient></defs>
+            <rect width='200' height='200' fill='url(%23a)'/>
+            <g fill='rgba(255,255,255,0.7)'>
+              <circle cx='40' cy='40' r='22'/><circle cx='160' cy='60' r='16'/><circle cx='120' cy='160' r='28'/>
+            </g>
+          </svg>" /></div>
+                <div class="shot"><img alt="abstract 2" src="data:image/svg+xml;utf8,
+          <svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 200'>
+            <rect width='200' height='200' fill='%237c3aed'/>
+            <path d='M0,120 C80,40 120,200 200,120 L200,200 L0,200 Z' fill='%2322d3ee' opacity='0.7'/>
+          </svg>" /></div>
+                <div class="shot"><img alt="abstract 3" src="data:image/svg+xml;utf8,
+          <svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 200'>
+            <rect width='200' height='200' fill='%2310b981'/>
+            <g stroke='white' stroke-width='4' opacity='0.6'>
+              <line x1='20' y1='20' x2='180' y2='180'/>
+              <line x1='180' y1='20' x2='20' y2='180'/>
+            </g>
+          </svg>" /></div>
+                <div class="shot"><img alt="abstract 4" src="data:image/svg+xml;utf8,
+          <svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 200'>
+            <defs><radialGradient id='r' cx='50%' cy='50%' r='70%'><stop offset='0' stop-color='white' stop-opacity='0.8'/><stop offset='1' stop-color='%2322d3ee' stop-opacity='1'/></radialGradient></defs>
+            <rect width='200' height='200' fill='%230b0d10'/>
+            <circle cx='100' cy='100' r='90' fill='url(%23r)'/>
+          </svg>" /></div>
+                <div class="shot"><img alt="abstract 5" src="data:image/svg+xml;utf8,
+          <svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 200'>
+            <rect width='200' height='200' fill='%23e11d48'/>
+            <rect x='40' y='40' width='120' height='120' rx='18' fill='white' opacity='0.85'/>
+          </svg>" /></div>
+                <div class="shot"><img alt="abstract 6" src="data:image/svg+xml;utf8,
+          <svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 200'>
+            <rect width='200' height='200' fill='%232563eb'/>
+            <circle cx='60' cy='140' r='46' fill='%2310b981'/>
+            <circle cx='150' cy='70' r='26' fill='white' opacity='0.85'/>
+          </svg>" /></div>
+            </div>
+        </section>
+
+        <section id="contact">
+            <h2>Contact</h2>
+            <div class="grid">
+                
+
+               <div class="tile card">
+  <h3>Let's talk</h3>
+  <p>Drop a line and I’ll get back with ideas, timelines, and a plan.</p>
+
+  <!-- yahan apna sahi formResponse URL daalna -->
+  <form id="contactForm" 
+action="https://docs.google.com/forms/u/0/d/e/1FAIpQLSdBB-iWcU4wytGh-pipXEfrJRmbtNe1bZcQCMXkMEsteAWJuw/formResponse"        method="POST"
+        target="hidden_iframe">
+    <div style="display:grid; gap:10px; grid-template-columns: 1fr 1fr;">
+      <input class="card" required name="entry.427958957" placeholder="Your name"
+             style="padding:12px; border-radius:12px; border:1px solid var(--border); background:var(--card); color:var(--text);">
+
+      <input class="card" type="email" required name="entry.1557000361" placeholder="Email"
+             style="padding:12px; border-radius:12px; border:1px solid var(--border); background:var(--card); color:var(--text);">
+    </div>
+
+    <textarea class="card" required name="entry.270840397" placeholder="Your message" rows="4"
+              style="width:100%; margin-top:10px; padding:12px; border-radius:12px; border:1px solid var(--border); background:var(--card); color:var(--text);"></textarea>
+
+    <div class="cta-row">
+      <button class="btn primary" type="submit">Send Message</button>
+      <span id="formStatus" class="chip" hidden>✅ Sent</span>
+    </div>
+  </form>
+
+  <iframe name="hidden_iframe" id="hidden_iframe" style="display:none;"></iframe>
+</div>
+
+<script>
+  var submitted = false;
+  var form = document.getElementById('contactForm');
+  var statusEl = document.getElementById('formStatus');
+  var iframe = document.getElementById('hidden_iframe');
+
+  form.addEventListener('submit', function () {
+    submitted = true;
+  });
+
+  iframe.addEventListener('load', function () {
+    if (submitted) {
+      statusEl.hidden = false;  // ✅ Sent show karo
+      form.reset();             // Form clear
+      submitted = false;
+    }
+  });
+</script>
+
+                <div class="tile card">
+                    <h3>Elsewhere</h3>
+                    <p class="small">Add your links here:</p>
+                    <p>
+                        <a class="btn" href="https://www.linkedin.com/in/prashantsinghrajputofficial/">LinkedIn</a>
+                        <a class="btn" href="https://github.com/PrashantSinghRajputOfficial/">GitHub</a>
+                        <a class="btn"
+                            href="https://drive.google.com/drive/folders/1tVvcOS-D0tChU8Igq-8T8EvCbKHQDKCb">PROJECT</a>
+                    </p>
+                    <p class="small" id="quote">“Loading quote...”</p>
+                </div>
+                <div class="tile card">
+                    <h3>Stats</h3>
+                    <p class="small">Live counters</p>
+                    <p style="font-size:28px; font-weight:800; margin:12px 0;">
+                        Visitors: <span id="visitors">0</span> • Clicks: <span id="clicks">0</span>
+                    </p>
+                    <button class="btn" onclick="incClicks()">Click me</button>
+                </div>
+            </div>
+        </section>
+
+        <footer>
+            © <span id="year"></span> You • Built with ♥ in one file. <span class="small">Theme: <span
+                    id="themeName">dark</span></span>
+        </footer>
+    </main>
+
+    <script>
+        // ---- THEME TOGGLE ----
+        const root = document.documentElement;
+        const themeToggle = document.getElementById('themeToggle');
+        const themeName = document.getElementById('themeName');
+        const saved = localStorage.getItem('theme');
+        if (saved) document.documentElement.setAttribute('data-theme', saved);
+        themeName.textContent = document.documentElement.getAttribute('data-theme') === 'light' ? 'light' : 'dark';
+        themeToggle.addEventListener('click', () => {
+            const current = document.documentElement.getAttribute('data-theme');
+            const next = current === 'light' ? '' : 'light';
+            if (next) document.documentElement.setAttribute('data-theme', next); else document.documentElement.removeAttribute('data-theme');
+            localStorage.setItem('theme', next);
+            themeName.textContent = next === 'light' ? 'light' : 'dark';
+            beep(420); // subtle feedback
+        });
+
+        // ---- TYPEWRITER ----
+        const typeEl = document.getElementById('typewriter');
+        const phrases = [
+            'I craft bold web experiences ✨',
+            'Pixel-perfect • Performance-first',
+            'Neon vibes. Smooth motion. ⚡',
+            'Single-file. Zero deps. Infinite style.'
+        ];
+        let pi = 0, ci = 0, typing = true;
+        function typeLoop() {
+            const t = phrases[pi];
+            if (typing) {
+                ci++;
+                typeEl.textContent = t.slice(0, ci);
+                if (ci === t.length) { typing = false; setTimeout(typeLoop, 1200); return; }
+                setTimeout(typeLoop, 38 + Math.random() * 40);
+            } else {
+                ci--;
+                typeEl.textContent = t.slice(0, ci);
+                if (ci === 0) { typing = true; pi = (pi + 1) % phrases.length; }
+                setTimeout(typeLoop, 22 + Math.random() * 30);
+            }
+        }
+        typeLoop();
+
+        // ---- LOCAL TIME ----
+        function updateTime() {
+            const d = new Date();
+            const s = d.toLocaleString(undefined, { dateStyle: 'medium', timeStyle: 'short' });
+            document.getElementById('localTime').textContent = '🕒 ' + s;
+        }
+        updateTime(); setInterval(updateTime, 1000 * 30);
+
+        // ---- YEAR ----
+        document.getElementById('year').textContent = new Date().getFullYear();
+
+        // ---- QUOTES ---- (offline list)
+        const quotes = [
+            '“Make it work, make it right, make it fast.” — Kent Beck',
+            '“Simplicity is the soul of efficiency.” — Austin Freeman',
+            '“Code is like humor. When you have to explain it, it’s bad.” — Cory House',
+            '“Design is intelligence made visible.” — Alina Wheeler'
+        ];
+        document.getElementById('quote').textContent = quotes[Math.floor(Math.random() * quotes.length)];
+
+        // ---- FAUX FORM SUBMIT ----
+        function fauxSubmit() {
+            const st = document.getElementById('formStatus');
+            st.hidden = false; beep(600);
+            setTimeout(() => { st.hidden = true; }, 2400);
+        }
+
+        // ---- CLICK / VISITOR COUNTERS ----
+        const clicksEl = document.getElementById('clicks');
+        const visitorsEl = document.getElementById('visitors');
+        clicksEl.textContent = Number(localStorage.getItem('clicks') || 0);
+        visitorsEl.textContent = Number(localStorage.getItem('visitors') || 0) + 1;
+        localStorage.setItem('visitors', visitorsEl.textContent);
+        function incClicks() {
+            const n = Number(localStorage.getItem('clicks') || 0) + 1;
+            localStorage.setItem('clicks', n); clicksEl.textContent = n; beep(800);
+        }
+
+        // ---- AUDIO BEEP (WebAudio) ----
+        let audioCtx;
+        function beep(freq = 440) {
+            try {
+                audioCtx = audioCtx || new (window.AudioContext || window.webkitAudioContext)();
+                const o = audioCtx.createOscillator();
+                const g = audioCtx.createGain();
+                o.type = 'sine'; o.frequency.value = freq;
+                g.gain.value = 0.0001; // start silent to avoid pop
+                o.connect(g); g.connect(audioCtx.destination);
+                o.start();
+                const now = audioCtx.currentTime;
+                g.gain.exponentialRampToValueAtTime(0.06, now + 0.01);
+                g.gain.exponentialRampToValueAtTime(0.0001, now + 0.18);
+                o.stop(now + 0.2);
+            } catch (e) { /* ignore */ }
+        }
+
+        // ---- PARTICLE BACKGROUND ----
+        const canvas = document.getElementById('bgCanvas');
+        const ctx = canvas.getContext('2d');
+        let W, H, dpr;
+        const particles = [];
+        const PCOUNT = 120; // tweak for perf
+        const mouse = { x: 0, y: 0, active: false };
+
+        function resize() {
+            dpr = Math.min(2, window.devicePixelRatio || 1);
+            W = canvas.width = Math.floor(innerWidth * dpr);
+            H = canvas.height = Math.floor(innerHeight * dpr);
+            canvas.style.width = innerWidth + 'px';
+            canvas.style.height = innerHeight + 'px';
+        }
+        window.addEventListener('resize', resize); resize();
+
+        function rnd(a, b) { return a + Math.random() * (b - a); }
+
+        function spawn() {
+            particles.length = 0;
+            for (let i = 0; i < PCOUNT; i++) {
+                particles.push({
+                    x: Math.random() * W, y: Math.random() * H,
+                    vx: rnd(-0.25, 0.25), vy: rnd(-0.25, 0.25),
+                    r: rnd(1.5, 3.2),
+                    h: Math.random() * 360,
+                });
+            }
+        }
+        spawn();
+
+        canvas.addEventListener('pointermove', (e) => {
+            const rect = canvas.getBoundingClientRect();
+            mouse.x = (e.clientX - rect.left) * dpr;
+            mouse.y = (e.clientY - rect.top) * dpr;
+            mouse.active = true;
+        });
+        canvas.addEventListener('pointerleave', () => mouse.active = false);
+        canvas.addEventListener('click', () => {
+            // burst
+            for (let i = 0; i < 20; i++) {
+                particles.push({ x: mouse.x, y: mouse.y, vx: rnd(-1, 1), vy: rnd(-1, 1), r: rnd(1.5, 3.5), h: Math.random() * 360 });
+            }
+            beep(500 + Math.random() * 200);
+        });
+
+        function line(a, b) {
+            const dx = a.x - b.x, dy = a.y - b.y; const dist = Math.hypot(dx, dy);
+            if (dist < 100 * dpr) {
+                ctx.globalAlpha = 0.08 * (1 - dist / (100 * dpr));
+                ctx.beginPath(); ctx.moveTo(a.x, a.y); ctx.lineTo(b.x, b.y); ctx.stroke();
+                ctx.globalAlpha = 1;
+            }
+        }
+
+        function loop() {
+            ctx.clearRect(0, 0, W, H);
+
+            // background glow gradient that subtly shifts with time
+            const t = performance.now() * 0.0002;
+            const gx = (0.5 + Math.sin(t) * 0.5) * W;
+            const gy = (0.5 + Math.cos(t) * 0.5) * H;
+            const grad = ctx.createRadialGradient(gx, gy, 40 * dpr, gx, gy, Math.max(W, H));
+            grad.addColorStop(0, 'rgba(124,58,237,0.08)');
+            grad.addColorStop(1, 'rgba(34,211,238,0.02)');
+            ctx.fillStyle = grad; ctx.fillRect(0, 0, W, H);
+
+            ctx.lineWidth = 1 * dpr; ctx.strokeStyle = 'rgba(255,255,255,0.5)';
+
+            for (let i = 0; i < particles.length; i++) {
+                const p = particles[i];
+                // motion
+                p.x += p.vx; p.y += p.vy;
+                // wrap
+                if (p.x < -20) p.x = W + 20; if (p.x > W + 20) p.x = -20;
+                if (p.y < -20) p.y = H + 20; if (p.y > H + 20) p.y = -20;
+                // mouse gravity/repel
+                if (mouse.active) {
+                    const dx = p.x - mouse.x, dy = p.y - mouse.y; const d = Math.hypot(dx, dy);
+                    if (d < 180 * dpr) { const f = (180 * dpr - d) / (180 * dpr); p.vx += (dx / d) * -0.06 * f; p.vy += (dy / d) * -0.06 * f; }
+                }
+                // draw
+                ctx.fillStyle = `hsla(${p.h}, 90%, 70%, 0.8)`;
+                ctx.beginPath(); ctx.arc(p.x, p.y, p.r * dpr, 0, Math.PI * 2); ctx.fill();
+                // connect to a few neighbors
+                if (i % 3 === 0) { for (let j = i + 1; j < i + 6 && j < particles.length; j++) line(p, particles[j]); }
+            }
+
+            requestAnimationFrame(loop);
+        }
+        loop();
+    </script>
 </body>
+
 </html>

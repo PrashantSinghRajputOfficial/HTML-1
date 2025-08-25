@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Crazy Maaf Kiya Game</title>
+  <style>
+    html, body {
+      height: 100%;
+      margin: 0;
+      padding: 0;
+      font-family: 'Comic Sans MS', cursive, sans-serif;
+    }
+    body {
+      height: 100vh;
+      width: 100vw;
+      overflow: hidden;
+      background: linear-gradient(135deg, #ff6ec4 0%, #7873f5 100%);
+      animation: bgmove 8s ease-in-out infinite alternate;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    @keyframes bgmove {
+      0% { background-position: 0% 50%; }
+      100% { background-position: 100% 50%; }
+    }
+
+    #game-box {
+      background: rgba(255,255,255,0.8);
+      border-radius: 25px;
+      padding: 40px 60px;
+      box-shadow: 0 0 40px 8px #a68efa;
+      text-align: center;
+      position: relative;
+      z-index: 2;
+    }
+
+    h1 {
+      font-size: 2.3em;
+      margin-bottom: 30px;
+      color: #52006A;
+      text-shadow: 2px 2px 8px #fff, 0 0 20px #8707ff70;
+    }
+
+    .btn {
+      font-size: 1.5em;
+      margin: 20px;
+      padding: 18px 35px;
+      border-radius: 40px;
+      border: none;
+      cursor: pointer;
+      font-weight: bold;
+      transition: background 0.3s, color 0.3s, transform 0.22s;
+      box-shadow: 2px 4px 20px #ff87ca60;
+    }
+    .btn#yes {
+      background: #60f507;
+      color: #52006A;
+    }
+    .btn#yes:hover {
+      background: #aff583;
+      transform: scale(1.12) rotate(-5deg);
+    }
+    .btn#no {
+      background: #ff0078;
+      color: #fff;
+      position: absolute;
+      top: 62%;
+      left: 55%;
+      transform: translate(-50%, -50%);
+      min-width: 90px;
+      min-height: 60px;
+    }
+
+    .btn#no.running {
+      background: #8E05C2;
+      color: #ffeed6;
+    }
+
+    #thankyou {
+      font-size: 2em;
+      color: #ffffff;
+      background: #6002ee;
+      box-shadow: 0 0 39px 10px #ff6ec450;
+      padding: 40px;
+      border-radius: 45px;
+      margin-top: 20px;
+      animation: thankyou 1.3s cubic-bezier(0.16,1,0.3,1.15) alternate infinite;
+      display: none;
+    }
+    @keyframes thankyou {
+      from { transform: scale(0.98) rotate(-5deg); }
+      to   { transform: scale(1.05) rotate(7deg) skewY(3deg);}
+    }
+  </style>
+</head>
+<body>
+  <div id="game-box">
+    <h1>Kya aap ne mujhe maaf kar diya?</h1>
+    <button class="btn" id="yes">YES</button>
+    <button class="btn" id="no">NO</button>
+    <div id="thankyou">Thank You! 😍</div>
+  </div>
+  <script>
+    const noBtn = document.getElementById('no');
+    const yesBtn = document.getElementById('yes');
+    const thankYou = document.getElementById('thankyou');
+    const gameBox = document.getElementById('game-box');
+    let boxRect, btnWidth, btnHeight;
+
+    function moveNoBtn() {
+      boxRect = gameBox.getBoundingClientRect();
+      btnWidth = noBtn.offsetWidth;
+      btnHeight = noBtn.offsetHeight;
+
+      let pad = 15;
+      let maxX = boxRect.width - btnWidth - pad;
+      let maxY = boxRect.height - btnHeight - pad;
+      let x = Math.random() * maxX + pad/2;
+      let y = Math.random() * maxY + pad/2 + 40; // avoid heading overlap
+      noBtn.style.left = (x / boxRect.width * 100) + "%";
+      noBtn.style.top = (y / boxRect.height * 100) + "%";
+      noBtn.classList.add("running");
+    }
+
+    noBtn.addEventListener('mouseenter', moveNoBtn);
+    noBtn.addEventListener('click', moveNoBtn); // in case ki accidental click ho jaye
+
+    yesBtn.addEventListener('click', function() {
+      noBtn.style.display = 'none';
+      yesBtn.style.display = 'none';
+      thankYou.style.display = 'block';
+      gameBox.querySelector("h1").textContent = "Yay! 🙏";
+    });
+  </script>
+</body>
+</html>

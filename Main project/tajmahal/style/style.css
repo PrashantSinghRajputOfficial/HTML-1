@@ -1,0 +1,33 @@
+.main_header{
+    size-adjust: auto;
+
+}
+.main_nav{
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    background-color: gray;
+    display: flex;
+    float: left;
+    width: 100%;
+}
+.li-main{
+    float: right;
+    display: flex;
+    
+}
+.li-main a{
+    display: block; /* Make links fill the list item */
+    color: white; /* White text color */
+    text-align: center; /* Center text */
+    padding: 14px 50px; /* Add padding for spacing */
+    text-decoration: none; /* Remove underline from links */
+    font-size: 20px;
+    width: 20%;
+}
+.li-main a:hover{
+    background-color: black;
+}
+ul{
+    width: 50%;
+}
